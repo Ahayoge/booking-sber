@@ -1,0 +1,132 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output = "../generated/prisma"
+  moduleFormat = "cjs"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ─── Enums ────────────────────────────────────────────────────────────────────
+
+enum Role {
+  EMPLOYEE
+  ADMIN
+}
+
+enum RoomType {
+  MEETING_ROOM
+  COWORKING
+  MEDIA_STUDIO
+  GYM
+  OTHER
+}
+
+enum RoomStatus {
+  ACTIVE
+  MAINTENANCE
+}
+
+enum BookingStatus {
+  CONFIRMED
+  CANCELLED
+}
+
+enum NotificationType {
+  BOOKING_CONFIRMED
+  BOOKING_CANCELLED
+  REMINDER
+}
+
+// ─── Models ───────────────────────────────────────────────────────────────────
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  // Пароль хранится как bcrypt-хэш, никогда не plain text
+  password     String
+  name         String
+  department   String
+  role         Role      @default(EMPLOYEE)
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  bookings      Booking[]
+  notifications Notification[]
+  refreshTokens RefreshToken[]
+}
+
+model Room {
+  id         String     @id @default(uuid())
+  name       String
+  type       RoomType
+  capacity   Int
+  address    String
+  floor      Int
+  // Массив строк-тегов: ["проектор", "доска", "микрофоны"]
+  equipment  String[]
+  photoUrl   String?
+  status     RoomStatus @default(ACTIVE)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  bookings Booking[]
+
+  // Индекс для быстрой фильтрации по типу и статусу
+  @@index([type, status])
+}
+
+model Booking {
+  id        String        @id @default(uuid())
+  userId    String
+  roomId    String
+  startTime DateTime
+  endTime   DateTime
+  status    BookingStatus @default(CONFIRMED)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  user          User           @relation(fields: [userId], references: [id])
+  room          Room           @relation(fields: [roomId], references: [id])
+  notifications Notification[]
+
+  // Составной индекс: главный индекс для проверки пересечений броней
+  @@index([roomId, startTime, endTime])
+  // Индекс для запросов "брони конкретного пользователя"
+  @@index([userId])
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  userId    String
+  bookingId String?
+  type      NotificationType
+  message   String
+  isRead    Boolean          @default(false)
+  createdAt DateTime         @default(now())
+
+  user    User     @relation(fields: [userId], references: [id])
+  booking Booking? @relation(fields: [bookingId], references: [id])
+
+  // Индекс для получения непрочитанных уведомлений пользователя
+  @@index([userId, isRead])
+}
+
+model RefreshToken {
+  id        String   @id @default(uuid())
+  // Храним хэш токена, не plain значение
+  token     String   @unique
+  userId    String
+  expiresAt DateTime
+  createdAt DateTime @default(now())
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+}
