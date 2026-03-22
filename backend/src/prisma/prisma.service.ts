@@ -3,7 +3,7 @@ import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
 import { PrismaPg } from '@prisma/adapter-pg';
 import { Pool } from 'pg';
 // Prisma 7: импорт НЕ из "@prisma/client", а из сгенерированного клиента!
-import { PrismaClient } from 'src/generated/prisma/client';
+import { PrismaClient } from '../generated/prisma/client';
 
 @Injectable()
 // OnModuleInit — подключаемся к БД при старте модуля

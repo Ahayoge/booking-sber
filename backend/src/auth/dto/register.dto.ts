@@ -1,27 +1,36 @@
-// src/auth/dto/register.dto.ts
-import { ApiProperty } from '@nestjs/swagger';
-import { IsEmail, IsString, MinLength, MaxLength } from 'class-validator';
+import {
+  IsEmail,
+  IsString,
+  MinLength,
+  IsOptional,
+  IsEnum,
+} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { Role } from 'src/generated/prisma/enums';
 
 export class RegisterDto {
-  @ApiProperty({ example: 'ivan.ivanov@sber.ru' })
-  @IsEmail({}, { message: 'Некорректный email' })
-  email: string;
-
-  @ApiProperty({ example: 'SecurePass123', minLength: 8 })
-  @IsString()
-  @MinLength(8, { message: 'Пароль должен быть не менее 8 символов' })
-  @MaxLength(100)
-  password: string;
-
   @ApiProperty({ example: 'Иван Иванов' })
   @IsString()
   @MinLength(2)
-  @MaxLength(100)
   name: string;
 
-  @ApiProperty({ example: 'Отдел разработки' })
+  @ApiProperty({ example: 'ivan@sber.ru' })
+  @IsEmail()
+  email: string;
+
+  @ApiProperty({ example: 'password123', minLength: 8 })
   @IsString()
-  @MinLength(2)
-  @MaxLength(100)
-  department: string;
+  @MinLength(8)
+  password: string;
+
+  @ApiPropertyOptional({ example: 'Отдел разработки' })
+  @IsString()
+  @IsOptional()
+  department?: string;
+
+  // ✅ Роль опциональна — если не передана, по умолчанию EMPLOYEE
+  @ApiPropertyOptional({ enum: Role, default: Role.EMPLOYEE })
+  @IsEnum(Role)
+  @IsOptional()
+  role?: Role;
 }

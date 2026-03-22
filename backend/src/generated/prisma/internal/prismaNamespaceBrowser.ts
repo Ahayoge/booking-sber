@@ -17,8 +17,8 @@
 
 import * as runtime from "@prisma/client/runtime/index-browser"
 
-export type * from '../models.js'
-export type * from './prismaNamespace.js'
+export type * from '../models'
+export type * from './prismaNamespace'
 
 export const Decimal = runtime.Decimal
 
@@ -51,6 +51,9 @@ export const AnyNull = runtime.AnyNull
 
 
 export const ModelName = {
+  RoomOwnership: 'RoomOwnership',
+  RoomSchedule: 'RoomSchedule',
+  RoomBlockedSlot: 'RoomBlockedSlot',
   User: 'User',
   Room: 'Room',
   Booking: 'Booking',
@@ -72,6 +75,40 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 } as const)
 
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
+
+
+export const RoomOwnershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roomId: 'roomId',
+  createdAt: 'createdAt'
+} as const
+
+export type RoomOwnershipScalarFieldEnum = (typeof RoomOwnershipScalarFieldEnum)[keyof typeof RoomOwnershipScalarFieldEnum]
+
+
+export const RoomScheduleScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  dayOfWeek: 'dayOfWeek',
+  isOpen: 'isOpen',
+  openTime: 'openTime',
+  closeTime: 'closeTime'
+} as const
+
+export type RoomScheduleScalarFieldEnum = (typeof RoomScheduleScalarFieldEnum)[keyof typeof RoomScheduleScalarFieldEnum]
+
+
+export const RoomBlockedSlotScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type RoomBlockedSlotScalarFieldEnum = (typeof RoomBlockedSlotScalarFieldEnum)[keyof typeof RoomBlockedSlotScalarFieldEnum]
 
 
 export const UserScalarFieldEnum = {

@@ -6,7 +6,6 @@ import {
   IsEnum,
   IsOptional,
   IsArray,
-  IsUrl,
   Min,
   Max,
   MinLength,
@@ -57,7 +56,7 @@ export class CreateRoomDto {
 
   @ApiPropertyOptional({ example: 'https://cdn.sber.ru/rooms/baikal.jpg' })
   @IsOptional()
-  @IsUrl({}, { message: 'photoUrl должен быть корректным URL' })
+  @IsString({})
   photoUrl?: string;
 
   @ApiPropertyOptional({ enum: RoomStatus, default: RoomStatus.ACTIVE })

@@ -1,23 +1,33 @@
-// src/app.module.ts
+// src/app.module.ts — полная итоговая версия
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { BullModule } from '@nestjs/bullmq';
 import { PrismaModule } from './prisma/prisma.module';
-import { AuthModule } from 'src/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 import { RoomsModule } from './rooms/rooms.module';
+import { BookingsModule } from './bookings/bookings.module';
+import { NotificationsModule } from './notifications/notifications.module';
+import { AdminModule } from './admin/admin.module';
+import { FilesModule } from './files/files.module';
 
 @Module({
   imports: [
-    // ConfigModule — загружает .env в process.env глобально
     ConfigModule.forRoot({ isGlobal: true }),
-    // PrismaModule — глобальный (@Global), доступен везде
+    BullModule.forRootAsync({
+      useFactory: () => ({
+        connection: {
+          host: process.env.REDIS_HOST || 'localhost',
+          port: parseInt(process.env.REDIS_PORT || '6379', 10),
+        },
+      }),
+    }),
     PrismaModule,
-    // Модули приложения — добавляем по мере реализации
     AuthModule,
-    // RoomsModule,    ← добавим в следующем этапе
-    // BookingsModule,
-    // NotificationsModule,
-    // AdminModule,
     RoomsModule,
+    BookingsModule,
+    NotificationsModule,
+    AdminModule,
+    FilesModule,
   ],
 })
 export class AppModule {}

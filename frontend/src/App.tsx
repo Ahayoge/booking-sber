@@ -1,79 +1,81 @@
-import { useState } from "react";
-import axios from "axios";
-import "./App.css";
+// src/App.tsx
+import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router";
+import { useAuthStore } from "@/store/auth.store";
 
-function App() {
-  const [count, setCount] = useState("");
+// Layouts
+import MainLayout from "@/components/layout/MainLayout";
+import AuthLayout from "@/components/layout/AuthLayout";
 
-  const register = () => {
-    try {
-      axios.post("http://localhost:3000/api/auth/register", {
-        email: "ivan.ivanov54@sber.ru",
-        password: "SecurePass123",
-        name: "Иван Иванов",
-        department: "Отдел разработки",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+// Страницы
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import RoomsPage from "@/pages/RoomsPage";
+import RoomDetailPage from "@/pages/RoomDetailPage";
+import BookingsPage from "@/pages/BookingsPage";
+import NotificationsPage from "@/pages/NotificationsPage";
+import AdminRoomsPage from "@/pages/admin/AdminRoomsPage";
+import AdminBookingsPage from "@/pages/admin/AdminBookingsPage";
+import AdminAnalyticsPage from "@/pages/admin/AdminAnalyticsPage";
+import AdminUsersPage from "@/pages/admin/AdminUsersPage";
 
-  const login = () => {
-    try {
-      axios.post("http://localhost:3000/api/auth/login", {
-        email: "ivan.ivanov54@sber.ru",
-        password: "SecurePass123",
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  };
+import RoomOwnerRoute from "@/components/RoomOwnerRoute";
+import OwnerRoomPage from "@/pages/owner/OwnerRoomPage";
 
-  const createRoom = () => {
-    try {
-      axios.post(
-        "http://localhost:3000/api/rooms",
-        {
-          name: 'Переговорная "Байкал"',
-          type: "MEETING_ROOM",
-          capacity: 10,
-          address: "ул. Вавилова, 19",
-          floor: 3,
-          equipment: ["проектор", "доска", "микрофоны"],
-          photoUrl: "https://cdn.sber.ru/rooms/baikal.jpg",
-          status: "ACTIVE",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${count}`,
-          },
-        },
-      );
-    } catch (error) {
-      console.log(error);
-    }
-  };
+// Guard-компоненты
+import PrivateRoute from "@/components/PrivateRoute";
+import AdminRoute from "@/components/AdminRoute";
+
+// Theme
+import { useThemeStore } from "@/store/theme.store";
+
+export default function App() {
+  const { clearUser } = useAuthStore();
+  const { isDark } = useThemeStore();
+
+  useEffect(() => {
+    document.body.classList.toggle("dark", isDark);
+  }, [isDark]);
+
+  useEffect(() => {
+    // Слушаем событие разлогина из axios interceptor
+    const handleLogout = () => clearUser();
+    window.addEventListener("auth:logout", handleLogout);
+    return () => window.removeEventListener("auth:logout", handleLogout);
+  }, [clearUser]);
 
   return (
-    <>
-      <button className="counter" onClick={register}>
-        Регистрация
-      </button>
-      <button className="counter" onClick={login}>
-        Логин
-      </button>
-      <button className="counter" onClick={createRoom}>
-        Создать комнату
-      </button>
-      <input
-        type="text"
-        value={count}
-        onChange={(e) => {
-          setCount(e.target.value);
-        }}
-      />
-    </>
+    <Routes>
+      {/* Публичные маршруты */}
+      <Route element={<AuthLayout />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/register" element={<RegisterPage />} />
+      </Route>
+
+      {/* Приватные маршруты — только для авторизованных */}
+      <Route element={<PrivateRoute />}>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Navigate to="/rooms" replace />} />
+          <Route path="/rooms" element={<RoomsPage />} />
+          <Route path="/rooms/:id" element={<RoomDetailPage />} />
+          <Route path="/bookings" element={<BookingsPage />} />
+          <Route path="/notifications" element={<NotificationsPage />} />
+
+          {/* Маршруты только для Admin */}
+          <Route element={<AdminRoute />}>
+            <Route path="/admin/rooms" element={<AdminRoomsPage />} />
+            <Route path="/admin/bookings" element={<AdminBookingsPage />} />
+            <Route path="/admin/analytics" element={<AdminAnalyticsPage />} />
+            <Route path="/admin/users" element={<AdminUsersPage />} />
+          </Route>
+          <Route element={<RoomOwnerRoute />}>
+            <Route path="/owner/rooms/:roomId" element={<OwnerRoomPage />} />
+          </Route>
+        </Route>
+      </Route>
+
+      {/* Fallback */}
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
   );
 }
-
-export default App;

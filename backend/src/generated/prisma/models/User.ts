@@ -9,8 +9,8 @@
  * 🟢 You can import this file directly.
  */
 import type * as runtime from "@prisma/client/runtime/client"
-import type * as $Enums from "../enums.js"
-import type * as Prisma from "../internal/prismaNamespace.js"
+import type * as $Enums from "../enums"
+import type * as Prisma from "../internal/prismaNamespace"
 
 /**
  * Model User
@@ -209,6 +209,7 @@ export type UserWhereInput = {
   bookings?: Prisma.BookingListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
+  ownedRooms?: Prisma.RoomOwnershipListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -223,6 +224,7 @@ export type UserOrderByWithRelationInput = {
   bookings?: Prisma.BookingOrderByRelationAggregateInput
   notifications?: Prisma.NotificationOrderByRelationAggregateInput
   refreshTokens?: Prisma.RefreshTokenOrderByRelationAggregateInput
+  ownedRooms?: Prisma.RoomOwnershipOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -240,6 +242,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   bookings?: Prisma.BookingListRelationFilter
   notifications?: Prisma.NotificationListRelationFilter
   refreshTokens?: Prisma.RefreshTokenListRelationFilter
+  ownedRooms?: Prisma.RoomOwnershipListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -282,6 +285,7 @@ export type UserCreateInput = {
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -296,6 +300,7 @@ export type UserUncheckedCreateInput = {
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -310,6 +315,7 @@ export type UserUpdateInput = {
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -324,6 +330,7 @@ export type UserUncheckedUpdateInput = {
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -359,6 +366,11 @@ export type UserUncheckedUpdateManyInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+export type UserScalarRelationFilter = {
+  is?: Prisma.UserWhereInput
+  isNot?: Prisma.UserWhereInput
+}
+
 export type UserCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   email?: Prisma.SortOrder
@@ -392,21 +404,22 @@ export type UserMinOrderByAggregateInput = {
   updatedAt?: Prisma.SortOrder
 }
 
-export type UserScalarRelationFilter = {
-  is?: Prisma.UserWhereInput
-  isNot?: Prisma.UserWhereInput
+export type UserCreateNestedOneWithoutOwnedRoomsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedRoomsInput, Prisma.UserUncheckedCreateWithoutOwnedRoomsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedRoomsInput
+  connect?: Prisma.UserWhereUniqueInput
 }
 
-export type StringFieldUpdateOperationsInput = {
-  set?: string
+export type UserUpdateOneRequiredWithoutOwnedRoomsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutOwnedRoomsInput, Prisma.UserUncheckedCreateWithoutOwnedRoomsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutOwnedRoomsInput
+  upsert?: Prisma.UserUpsertWithoutOwnedRoomsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOwnedRoomsInput, Prisma.UserUpdateWithoutOwnedRoomsInput>, Prisma.UserUncheckedUpdateWithoutOwnedRoomsInput>
 }
 
 export type EnumRoleFieldUpdateOperationsInput = {
   set?: $Enums.Role
-}
-
-export type DateTimeFieldUpdateOperationsInput = {
-  set?: Date | string
 }
 
 export type UserCreateNestedOneWithoutBookingsInput = {
@@ -451,6 +464,78 @@ export type UserUpdateOneRequiredWithoutRefreshTokensNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutRefreshTokensInput, Prisma.UserUpdateWithoutRefreshTokensInput>, Prisma.UserUncheckedUpdateWithoutRefreshTokensInput>
 }
 
+export type UserCreateWithoutOwnedRoomsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  department: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutOwnedRoomsInput = {
+  id?: string
+  email: string
+  password: string
+  name: string
+  department: string
+  role?: $Enums.Role
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
+  notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutOwnedRoomsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedRoomsInput, Prisma.UserUncheckedCreateWithoutOwnedRoomsInput>
+}
+
+export type UserUpsertWithoutOwnedRoomsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutOwnedRoomsInput, Prisma.UserUncheckedUpdateWithoutOwnedRoomsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutOwnedRoomsInput, Prisma.UserUncheckedCreateWithoutOwnedRoomsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutOwnedRoomsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutOwnedRoomsInput, Prisma.UserUncheckedUpdateWithoutOwnedRoomsInput>
+}
+
+export type UserUpdateWithoutOwnedRoomsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutOwnedRoomsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  department?: Prisma.StringFieldUpdateOperationsInput | string
+  role?: Prisma.EnumRoleFieldUpdateOperationsInput | $Enums.Role
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
+  notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutBookingsInput = {
   id?: string
   email: string
@@ -462,6 +547,7 @@ export type UserCreateWithoutBookingsInput = {
   updatedAt?: Date | string
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutBookingsInput = {
@@ -475,6 +561,7 @@ export type UserUncheckedCreateWithoutBookingsInput = {
   updatedAt?: Date | string
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutBookingsInput = {
@@ -504,6 +591,7 @@ export type UserUpdateWithoutBookingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutBookingsInput = {
@@ -517,6 +605,7 @@ export type UserUncheckedUpdateWithoutBookingsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutNotificationsInput = {
@@ -530,6 +619,7 @@ export type UserCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutNotificationsInput = {
@@ -543,6 +633,7 @@ export type UserUncheckedCreateWithoutNotificationsInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   refreshTokens?: Prisma.RefreshTokenUncheckedCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutNotificationsInput = {
@@ -572,6 +663,7 @@ export type UserUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutNotificationsInput = {
@@ -585,6 +677,7 @@ export type UserUncheckedUpdateWithoutNotificationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   refreshTokens?: Prisma.RefreshTokenUncheckedUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutRefreshTokensInput = {
@@ -598,6 +691,7 @@ export type UserCreateWithoutRefreshTokensInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutRefreshTokensInput = {
@@ -611,6 +705,7 @@ export type UserUncheckedCreateWithoutRefreshTokensInput = {
   updatedAt?: Date | string
   bookings?: Prisma.BookingUncheckedCreateNestedManyWithoutUserInput
   notifications?: Prisma.NotificationUncheckedCreateNestedManyWithoutUserInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutRefreshTokensInput = {
@@ -640,6 +735,7 @@ export type UserUpdateWithoutRefreshTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutRefreshTokensInput = {
@@ -653,6 +749,7 @@ export type UserUncheckedUpdateWithoutRefreshTokensInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   bookings?: Prisma.BookingUncheckedUpdateManyWithoutUserNestedInput
   notifications?: Prisma.NotificationUncheckedUpdateManyWithoutUserNestedInput
+  ownedRooms?: Prisma.RoomOwnershipUncheckedUpdateManyWithoutUserNestedInput
 }
 
 
@@ -664,12 +761,14 @@ export type UserCountOutputType = {
   bookings: number
   notifications: number
   refreshTokens: number
+  ownedRooms: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   bookings?: boolean | UserCountOutputTypeCountBookingsArgs
   notifications?: boolean | UserCountOutputTypeCountNotificationsArgs
   refreshTokens?: boolean | UserCountOutputTypeCountRefreshTokensArgs
+  ownedRooms?: boolean | UserCountOutputTypeCountOwnedRoomsArgs
 }
 
 /**
@@ -703,6 +802,13 @@ export type UserCountOutputTypeCountRefreshTokensArgs<ExtArgs extends runtime.Ty
   where?: Prisma.RefreshTokenWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountOwnedRoomsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.RoomOwnershipWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -716,6 +822,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   bookings?: boolean | Prisma.User$bookingsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
+  ownedRooms?: boolean | Prisma.User$ownedRoomsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -757,6 +864,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   bookings?: boolean | Prisma.User$bookingsArgs<ExtArgs>
   notifications?: boolean | Prisma.User$notificationsArgs<ExtArgs>
   refreshTokens?: boolean | Prisma.User$refreshTokensArgs<ExtArgs>
+  ownedRooms?: boolean | Prisma.User$ownedRoomsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -768,6 +876,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     bookings: Prisma.$BookingPayload<ExtArgs>[]
     notifications: Prisma.$NotificationPayload<ExtArgs>[]
     refreshTokens: Prisma.$RefreshTokenPayload<ExtArgs>[]
+    ownedRooms: Prisma.$RoomOwnershipPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1175,6 +1284,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   bookings<T extends Prisma.User$bookingsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$bookingsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BookingPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   notifications<T extends Prisma.User$notificationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$notificationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$NotificationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   refreshTokens<T extends Prisma.User$refreshTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$refreshTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RefreshTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  ownedRooms<T extends Prisma.User$ownedRoomsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ownedRoomsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$RoomOwnershipPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1674,6 +1784,30 @@ export type User$refreshTokensArgs<ExtArgs extends runtime.Types.Extensions.Inte
   take?: number
   skip?: number
   distinct?: Prisma.RefreshTokenScalarFieldEnum | Prisma.RefreshTokenScalarFieldEnum[]
+}
+
+/**
+ * User.ownedRooms
+ */
+export type User$ownedRoomsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the RoomOwnership
+   */
+  select?: Prisma.RoomOwnershipSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the RoomOwnership
+   */
+  omit?: Prisma.RoomOwnershipOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.RoomOwnershipInclude<ExtArgs> | null
+  where?: Prisma.RoomOwnershipWhereInput
+  orderBy?: Prisma.RoomOwnershipOrderByWithRelationInput | Prisma.RoomOwnershipOrderByWithRelationInput[]
+  cursor?: Prisma.RoomOwnershipWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.RoomOwnershipScalarFieldEnum | Prisma.RoomOwnershipScalarFieldEnum[]
 }
 
 /**

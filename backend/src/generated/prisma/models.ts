@@ -8,9 +8,12 @@
  *
  * 🟢 You can import this file directly.
  */
-export type * from './models/User.js'
-export type * from './models/Room.js'
-export type * from './models/Booking.js'
-export type * from './models/Notification.js'
-export type * from './models/RefreshToken.js'
-export type * from './commonInputTypes.js'
+export type * from './models/RoomOwnership'
+export type * from './models/RoomSchedule'
+export type * from './models/RoomBlockedSlot'
+export type * from './models/User'
+export type * from './models/Room'
+export type * from './models/Booking'
+export type * from './models/Notification'
+export type * from './models/RefreshToken'
+export type * from './commonInputTypes'

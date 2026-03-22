@@ -16,10 +16,10 @@
  */
 
 import * as runtime from "@prisma/client/runtime/client"
-import type * as Prisma from "../models.js"
-import { type PrismaClient } from "./class.js"
+import type * as Prisma from "../models"
+import { type PrismaClient } from "./class"
 
-export type * from '../models.js'
+export type * from '../models'
 
 export type DMMF = typeof runtime.DMMF
 
@@ -384,6 +384,9 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 
 export const ModelName = {
+  RoomOwnership: 'RoomOwnership',
+  RoomSchedule: 'RoomSchedule',
+  RoomBlockedSlot: 'RoomBlockedSlot',
   User: 'User',
   Room: 'Room',
   Booking: 'Booking',
@@ -404,10 +407,232 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "room" | "booking" | "notification" | "refreshToken"
+    modelProps: "roomOwnership" | "roomSchedule" | "roomBlockedSlot" | "user" | "room" | "booking" | "notification" | "refreshToken"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
+    RoomOwnership: {
+      payload: Prisma.$RoomOwnershipPayload<ExtArgs>
+      fields: Prisma.RoomOwnershipFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoomOwnershipFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoomOwnershipFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        findFirst: {
+          args: Prisma.RoomOwnershipFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoomOwnershipFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        findMany: {
+          args: Prisma.RoomOwnershipFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>[]
+        }
+        create: {
+          args: Prisma.RoomOwnershipCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        createMany: {
+          args: Prisma.RoomOwnershipCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoomOwnershipCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>[]
+        }
+        delete: {
+          args: Prisma.RoomOwnershipDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        update: {
+          args: Prisma.RoomOwnershipUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        deleteMany: {
+          args: Prisma.RoomOwnershipDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoomOwnershipUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoomOwnershipUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>[]
+        }
+        upsert: {
+          args: Prisma.RoomOwnershipUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomOwnershipPayload>
+        }
+        aggregate: {
+          args: Prisma.RoomOwnershipAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoomOwnership>
+        }
+        groupBy: {
+          args: Prisma.RoomOwnershipGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomOwnershipGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoomOwnershipCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomOwnershipCountAggregateOutputType> | number
+        }
+      }
+    }
+    RoomSchedule: {
+      payload: Prisma.$RoomSchedulePayload<ExtArgs>
+      fields: Prisma.RoomScheduleFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoomScheduleFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoomScheduleFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        findFirst: {
+          args: Prisma.RoomScheduleFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoomScheduleFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        findMany: {
+          args: Prisma.RoomScheduleFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>[]
+        }
+        create: {
+          args: Prisma.RoomScheduleCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        createMany: {
+          args: Prisma.RoomScheduleCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoomScheduleCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>[]
+        }
+        delete: {
+          args: Prisma.RoomScheduleDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        update: {
+          args: Prisma.RoomScheduleUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        deleteMany: {
+          args: Prisma.RoomScheduleDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoomScheduleUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoomScheduleUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>[]
+        }
+        upsert: {
+          args: Prisma.RoomScheduleUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomSchedulePayload>
+        }
+        aggregate: {
+          args: Prisma.RoomScheduleAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoomSchedule>
+        }
+        groupBy: {
+          args: Prisma.RoomScheduleGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomScheduleGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoomScheduleCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomScheduleCountAggregateOutputType> | number
+        }
+      }
+    }
+    RoomBlockedSlot: {
+      payload: Prisma.$RoomBlockedSlotPayload<ExtArgs>
+      fields: Prisma.RoomBlockedSlotFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.RoomBlockedSlotFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.RoomBlockedSlotFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        findFirst: {
+          args: Prisma.RoomBlockedSlotFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.RoomBlockedSlotFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        findMany: {
+          args: Prisma.RoomBlockedSlotFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>[]
+        }
+        create: {
+          args: Prisma.RoomBlockedSlotCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        createMany: {
+          args: Prisma.RoomBlockedSlotCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.RoomBlockedSlotCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>[]
+        }
+        delete: {
+          args: Prisma.RoomBlockedSlotDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        update: {
+          args: Prisma.RoomBlockedSlotUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        deleteMany: {
+          args: Prisma.RoomBlockedSlotDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.RoomBlockedSlotUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.RoomBlockedSlotUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>[]
+        }
+        upsert: {
+          args: Prisma.RoomBlockedSlotUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$RoomBlockedSlotPayload>
+        }
+        aggregate: {
+          args: Prisma.RoomBlockedSlotAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateRoomBlockedSlot>
+        }
+        groupBy: {
+          args: Prisma.RoomBlockedSlotGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomBlockedSlotGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.RoomBlockedSlotCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.RoomBlockedSlotCountAggregateOutputType> | number
+        }
+      }
+    }
     User: {
       payload: Prisma.$UserPayload<ExtArgs>
       fields: Prisma.UserFieldRefs
@@ -817,6 +1042,40 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
+export const RoomOwnershipScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId',
+  roomId: 'roomId',
+  createdAt: 'createdAt'
+} as const
+
+export type RoomOwnershipScalarFieldEnum = (typeof RoomOwnershipScalarFieldEnum)[keyof typeof RoomOwnershipScalarFieldEnum]
+
+
+export const RoomScheduleScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  dayOfWeek: 'dayOfWeek',
+  isOpen: 'isOpen',
+  openTime: 'openTime',
+  closeTime: 'closeTime'
+} as const
+
+export type RoomScheduleScalarFieldEnum = (typeof RoomScheduleScalarFieldEnum)[keyof typeof RoomScheduleScalarFieldEnum]
+
+
+export const RoomBlockedSlotScalarFieldEnum = {
+  id: 'id',
+  roomId: 'roomId',
+  startTime: 'startTime',
+  endTime: 'endTime',
+  reason: 'reason',
+  createdAt: 'createdAt'
+} as const
+
+export type RoomBlockedSlotScalarFieldEnum = (typeof RoomBlockedSlotScalarFieldEnum)[keyof typeof RoomBlockedSlotScalarFieldEnum]
+
+
 export const UserScalarFieldEnum = {
   id: 'id',
   email: 'email',
@@ -931,20 +1190,6 @@ export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMod
 
 
 /**
- * Reference to a field of type 'Role'
- */
-export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
-    
-
-
-/**
- * Reference to a field of type 'Role[]'
- */
-export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
-    
-
-
-/**
  * Reference to a field of type 'DateTime'
  */
 export type DateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime'>
@@ -959,20 +1204,6 @@ export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaM
 
 
 /**
- * Reference to a field of type 'RoomType'
- */
-export type EnumRoomTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoomType'>
-    
-
-
-/**
- * Reference to a field of type 'RoomType[]'
- */
-export type ListEnumRoomTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoomType[]'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -983,6 +1214,41 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
+    
+
+
+/**
+ * Reference to a field of type 'Role'
+ */
+export type EnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role'>
+    
+
+
+/**
+ * Reference to a field of type 'Role[]'
+ */
+export type ListEnumRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Role[]'>
+    
+
+
+/**
+ * Reference to a field of type 'RoomType'
+ */
+export type EnumRoomTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoomType'>
+    
+
+
+/**
+ * Reference to a field of type 'RoomType[]'
+ */
+export type ListEnumRoomTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'RoomType[]'>
     
 
 
@@ -1025,13 +1291,6 @@ export type EnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<
  * Reference to a field of type 'NotificationType[]'
  */
 export type ListEnumNotificationTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'NotificationType[]'>
-    
-
-
-/**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -1143,6 +1402,9 @@ export type PrismaClientOptions = ({
   comments?: runtime.SqlCommenterPlugin[]
 }
 export type GlobalOmitConfig = {
+  roomOwnership?: Prisma.RoomOwnershipOmit
+  roomSchedule?: Prisma.RoomScheduleOmit
+  roomBlockedSlot?: Prisma.RoomBlockedSlotOmit
   user?: Prisma.UserOmit
   room?: Prisma.RoomOmit
   booking?: Prisma.BookingOmit

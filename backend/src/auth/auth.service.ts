@@ -12,6 +12,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { RegisterDto } from './dto/register.dto';
 import { LoginDto } from './dto/login.dto';
 import type { StringValue } from 'ms';
+import { Role } from 'src/generated/prisma/enums';
 
 @Injectable()
 export class AuthService {
@@ -40,7 +41,8 @@ export class AuthService {
         email: dto.email,
         password: hashedPassword,
         name: dto.name,
-        department: dto.department,
+        department: dto.department ?? 'PIDORAS DEPARTMENT',
+        role: dto.role ?? Role.EMPLOYEE,
       },
       // select — никогда не возвращаем хэш пароля клиенту!
       select: {

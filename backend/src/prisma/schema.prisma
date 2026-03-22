@@ -4,9 +4,13 @@
 // Get a free hosted Postgres database in seconds: `npx create-db`
 
 generator client {
-  provider = "prisma-client"
-  output = "../generated/prisma"
-  moduleFormat = "cjs"
+  provider              = "prisma-client"
+  output                = "../generated/prisma"
+  moduleFormat          = "cjs"
+
+  // Явно говорим: генерируем TS-файлы, а в import-строках расширение не указываем
+  generatedFileExtension = "ts"
+  importFileExtension    = ""
 }
 
 datasource db {
@@ -17,7 +21,51 @@ datasource db {
 
 enum Role {
   EMPLOYEE
+  ROOM_OWNER
   ADMIN
+}
+
+// Связь многие-ко-многим: один пользователь может владеть несколькими помещениями
+// и у одного помещения может быть несколько владельцев (например, медиастудия и звукорежиссёр)
+model RoomOwnership {
+  id        String   @id @default(uuid())
+  userId    String
+  roomId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@unique([userId, roomId]) // один пользователь — один раз владелец конкретной комнаты
+  @@index([roomId])
+  @@index([userId])
+}
+
+// Базовое расписание помещения по дням недели
+// Например: пн-пт 09:00–20:00, сб-вс закрыто
+model RoomSchedule {
+  id        String  @id @default(uuid())
+  roomId    String
+  room      Room    @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  dayOfWeek Int     // 0=воскресенье, 1=понедельник ... 6=суббота
+  isOpen    Boolean @default(true)  // если false — весь день заблокирован
+  openTime  String  // "09:00" — время открытия
+  closeTime String  // "20:00" — время закрытия
+
+  @@unique([roomId, dayOfWeek]) // одна запись на день недели на комнату
+}
+
+// Разовые блокировки конкретных временных слотов
+// Например: 25 марта 14:00–16:00 заблокировано под технический перерыв
+model RoomBlockedSlot {
+  id        String   @id @default(uuid())
+  roomId    String
+  room      Room     @relation(fields: [roomId], references: [id], onDelete: Cascade)
+  startTime DateTime
+  endTime   DateTime
+  reason    String?  // опциональная причина блокировки (показывается пользователям)
+  createdAt DateTime @default(now())
+
+  @@index([roomId, startTime])
 }
 
 enum RoomType {
@@ -60,6 +108,7 @@ model User {
   bookings      Booking[]
   notifications Notification[]
   refreshTokens RefreshToken[]
+  ownedRooms RoomOwnership[] 
 }
 
 model Room {
@@ -75,6 +124,9 @@ model Room {
   status     RoomStatus @default(ACTIVE)
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
+  owners       RoomOwnership[]   // ← добавить
+  schedule     RoomSchedule[]    // ← добавить
+  blockedSlots RoomBlockedSlot[] // ← добавить
 
   bookings Booking[]
 

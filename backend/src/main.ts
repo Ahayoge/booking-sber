@@ -5,6 +5,8 @@ import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 import cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { GlobalExceptionFilter } from './common/filters/http-exception.filter';
+import { join } from 'path';
+import { mkdirSync } from 'fs';
 
 // Проверяем все обязательные переменные окружения ДО старта приложения
 function validateEnv() {
@@ -33,6 +35,8 @@ async function bootstrap() {
   validateEnv();
 
   const app = await NestFactory.create(AppModule);
+
+  mkdirSync(join(process.cwd(), 'uploads', 'rooms'), { recursive: true });
 
   app.setGlobalPrefix('api');
   app.use(cookieParser());

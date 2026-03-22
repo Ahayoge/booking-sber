@@ -1,0 +1,77 @@
+services:
+  # БД
+  postgres:
+    image: postgres:16-alpine
+    container_name: office_postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: office_booking
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    # healthcheck: проверяем что PostgreSQL готов принимать соединения
+    # backend не стартует пока postgres не пройдёт эту проверку
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # Редиска
+  redis:
+    image: redis:7-alpine
+    container_name: office_redis
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # Бэкенд
+  backend:
+    container_name: office_backend
+    build:
+      context: ./backend # папка с исходниками бэкенда
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@postgres:5432/office_booking
+      # Секреты передаём через переменные окружения хоста или .env файл
+      JWT_ACCESS_SECRET: ${JWT_ACCESS_SECRET}
+      JWT_REFRESH_SECRET: ${JWT_REFRESH_SECRET}
+      JWT_ACCESS_EXPIRES_IN: 15m
+      JWT_REFRESH_EXPIRES_IN: 7d
+      REDIS_HOST: redis # имя Redis-сервиса — Docker DNS резолвит автоматически
+      REDIS_PORT: 6379
+      PORT: 3000
+      FRONTEND_URL: http://localhost
+      NODE_ENV: production
+      COOKIE_SECURE: "false"
+    ports:
+      - "3000:3000"
+    volumes:
+      - uploads_data:/app/uploads
+    depends_on:
+      postgres:
+        condition: service_healthy # ждём пока postgres готов
+      redis:
+        condition: service_healthy # ждём пока redis готов
+
+  # Фронтенд
+  frontend:
+    container_name: office_frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
+  redis_data:
+  uploads_data:
