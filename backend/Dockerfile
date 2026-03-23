@@ -32,6 +32,8 @@ COPY --from=builder /app/src/prisma ./src/prisma
 COPY prisma.config.ts ./
 
 COPY entrypoint.sh ./entrypoint.sh
+
+RUN sed -i 's/\r//' ./entrypoint.sh && chmod +x ./entrypoint.sh
 RUN chmod +x ./entrypoint.sh
 
 EXPOSE 3000

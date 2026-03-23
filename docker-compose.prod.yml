@@ -60,6 +60,14 @@ services:
       redis:
         condition: service_healthy # ждём пока redis готов
 
+    healthcheck:
+      test:
+        ["CMD-SHELL", "wget -qO- http://localhost:3000/api/health || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 30s
+
   # Фронтенд
   frontend:
     container_name: office_frontend
@@ -69,7 +77,8 @@ services:
     ports:
       - "80:80"
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
 volumes:
   postgres_data:
